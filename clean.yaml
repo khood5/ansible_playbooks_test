@@ -1,0 +1,29 @@
+---
+- name: rm SeLinux and rm apache
+  hosts: all
+  remote_user: khood
+  become: yes
+
+  tasks:
+  - name: rm epel repo
+    yum: name=epel-release state=absent
+
+  - name: rm python binding for SELinux
+    yum: name={{item}} state=absent
+    with_items:
+    - libselinux-python
+    - libsemanage-python
+
+  - name: rm apache
+    yum: name=httpd state=absent
+
+  - name: rm git
+    yum: name=git state=absent
+
+  - name: rm lame app
+    file:
+      path: "/var/www/lameapp"
+      state: absent
+
+  - name: reboot serv
+    reboot:
