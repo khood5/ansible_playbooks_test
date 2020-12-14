@@ -1,0 +1,26 @@
+---
+- name: install SeLinux and install/start apache
+  hosts: webserv
+  remote_user: khood
+  become: yes
+
+  tasks:
+  - name: install epel repo
+    yum: name=epel-release state=present
+
+  - name: install python binding for SELinux
+    yum: name={{item}} state=present
+    with_items:
+    - libselinux-python
+    - libsemanage-python
+
+  - name: test SeLinux
+    command: getenforce
+    register: sestatus
+    changed_when: false
+
+  - name: install apache
+    yum: name=httpd state=present
+
+  - name: start apache
+    service: name=httpd state=started enabled=yes
