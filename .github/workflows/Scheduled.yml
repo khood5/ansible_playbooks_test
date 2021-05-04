@@ -29,15 +29,11 @@ jobs:
         with:
           fetch-depth: 0
       - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
-      - name: get branch last commit timestamps 
-        run: branches=$(for branch in `git branch -r | grep -v HEAD`;do echo -e `git show --format="%ct," $branch | head -n 1` $branch; done | sort -r)
-      - name: Use the value
-        run: echo $branches
-      - name: Set selected color
-        run: echo '::set-output name=SELECTED_COLOR::green'
-        id: random-color-generator
+      - name: get branch last commit timestamps
+        run: echo '::set-output name=BRANCHES::$(for branch in `git branch -r | grep -v HEAD`;do echo -e `git show --format="%ct," $branch | head -n 1` $branch; done | sort -r)'
+        id: repo_branches
       - name: Get color
-        run: echo "The selected color is ${{ steps.random-color-generator.outputs.SELECTED_COLOR }}"
+        run: echo "The selected color is ${{ steps.repo_branches.outputs.BRANCHES }}"
 #     - name: Send mail
 #       uses: dawidd6/action-send-mail@v3
 #       with:
