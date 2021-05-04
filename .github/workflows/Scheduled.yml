@@ -30,8 +30,7 @@ jobs:
       - name: get branch last commit timestamps 
         run: echo "branches=$(for branch in `git branch -r | grep -v HEAD`;do echo -e `git show --format="%ct," $branch | head -n 1` $branch; done | sort -r)" >> $GITHUB_ENV
       - name: Use the value
-        run: |
-            echo "${{ env.branches }}" '
+        run: echo "${{ env.branches }}" '
 #     - name: Send mail
 #       uses: dawidd6/action-send-mail@v3
 #       with:
