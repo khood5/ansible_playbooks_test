@@ -26,6 +26,8 @@ jobs:
       - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
       - name: Check out repository code
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
       - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
       - name: get branch last commit timestamps 
         run: echo "branches=$(for branch in `git branch -r | grep -v HEAD`;do echo -e `git show --format="%ct," $branch | head -n 1` $branch; done | sort -r)" >> $GITHUB_ENV
