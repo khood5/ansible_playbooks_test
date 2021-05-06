@@ -5,7 +5,7 @@
   become: yes
 
   tasks:
-  - name: rm epel repo
+  - name: rm epel repos
     yum: name=epel-release state=absent
 
   - name: rm python binding for SELinux
